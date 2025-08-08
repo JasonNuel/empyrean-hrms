@@ -36,7 +36,7 @@ const Dashboard = () => {
 </div>
 
 <QuickAccess />
-<Footer />
+
     </div>
     
   );
