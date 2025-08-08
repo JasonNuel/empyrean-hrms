@@ -5,7 +5,7 @@ import LeaveStats from '../components/LeaveStats';
 import PerformanceChart from '../components/PerformanceChart';
 import EmployeeWorkInfo from '../components/EmployeeWorkInfo';
 import UpcomingTasks from '../components/UpcomingTasks';
-import Footer from '../components/Footer';
+
 import './Dashboard.css';
 import ActivityTimeline from '../components/ActivityTimeline';
 import QuickAccess from '../components/QuickAccess';
