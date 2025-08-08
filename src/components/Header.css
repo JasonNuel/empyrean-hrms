@@ -1,0 +1,52 @@
+.dashboard-header {
+  width: 100%;
+  background-color: #fff;
+  padding: 12px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-left h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: rgb(90, 14, 14);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-icon {
+  font-size: 1.4rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.profile-icon {
+  font-size: 1.6rem;
+}
+
+.logout-button {
+  background-color: transparent;
+  border: 1px solid rgb(60, 14, 14);
+  color: rgb(60, 14, 14);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.logout-button:hover {
+  background-color: rgb(60, 14, 14);
+  color: white;
+}

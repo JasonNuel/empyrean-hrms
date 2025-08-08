@@ -1,0 +1,16 @@
+/* src/pages/Attendance.css */
+.attendance-container {
+  padding: 20px;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}

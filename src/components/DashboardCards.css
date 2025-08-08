@@ -1,0 +1,35 @@
+/* src/components/DashboardCards.css */
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 3rem;
+  padding: 1rem 0;
+}
+
+.card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  text-align: center;
+  border-left: 5px solid rgb(90, 14, 14);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+.card p {
+  margin-top: 0.5rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #000;
+}

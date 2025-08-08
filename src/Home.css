@@ -1,0 +1,36 @@
+.home-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+}
+
+.home-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.home-container p {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  color: #555;
+}
+
+.home-login-link {
+  padding: 10px 24px;
+  background-color: #e74c3c;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.home-login-link:hover {
+  background-color: #c0392b;
+}
+
+
+

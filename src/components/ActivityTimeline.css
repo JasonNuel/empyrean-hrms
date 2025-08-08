@@ -1,0 +1,29 @@
+.activity-timeline {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  flex: 1;
+  margin-top: 20px;
+}
+
+.activity-timeline h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.activity-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.activity-message {
+  font-weight: 500;
+  color: #444;
+}
+
+.activity-time {
+  font-size: 0.8rem;
+  color: #999;
+}

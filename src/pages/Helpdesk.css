@@ -1,0 +1,39 @@
+.helpdesk-container {
+  padding: 20px;
+}
+
+.helpdesk-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 600px;
+  margin-bottom: 30px;
+}
+
+.helpdesk-form input,
+.helpdesk-form select,
+.helpdesk-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.helpdesk-form button {
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.helpdesk-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.helpdesk-table th,
+.helpdesk-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}

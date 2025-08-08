@@ -1,0 +1,23 @@
+.app-container {
+  display: flex;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 25px;
+  width: calc(100% - 250px);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.main-content.collapsed {
+  margin-left: 80px;
+  width: calc(100% - 80px);
+}
+
+
+.main-content.public-page {
+  margin-left: 0;
+  padding: 0;
+  width: 100%;
+}
