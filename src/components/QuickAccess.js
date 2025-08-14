@@ -1,5 +1,6 @@
 import React from 'react';
 import './QuickAccess.css';
+import { Link } from 'react-router-dom';
 import { FaUsers, FaCalendarCheck, FaMoneyCheckAlt, FaChartLine } from 'react-icons/fa';
 
 const QuickAccess = () => {
