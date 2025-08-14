@@ -1,5 +1,6 @@
 // src/pages/Onboarding.js
 import React, { useState, useEffect } from 'react';
+import supabase from '../supabaseClient';
 
 export default function Onboarding() {
   const [onboardingList, setOnboardingList] = useState([]);
