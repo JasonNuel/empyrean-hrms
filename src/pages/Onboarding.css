@@ -1,5 +1,6 @@
 .onboarding-container {
   padding: 20px;
+  background-color: #f8f9fa;
 }
 
 .onboarding-form {
@@ -7,30 +8,132 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  align-items: center;
 }
 
 .onboarding-form input,
 .onboarding-form select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.onboarding-form input:focus,
+.onboarding-form select:focus {
+  outline: none;
+  border-color: #d4af37; /* Gold */
+  box-shadow: 0 0 4px rgba(212, 175, 55, 0.4);
 }
 
 .onboarding-form button {
   padding: 8px 16px;
-  background-color: #333;
+  background-color: #d4af37; /* Gold */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
+.onboarding-form button:hover {
+  background-color: #b9962f;
+}
+
+/* Table container */
 .onboarding-table {
   width: 100%;
   border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.onboarding-table th,
+/* Table header */
+.onboarding-table th {
+  background-color: #faf7f0;
+  color: #444;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px;
+  border-bottom: 2px solid #e0d5b9;
+}
+
+/* Table rows */
 .onboarding-table td {
   padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.onboarding-table tr:last-child td {
+  border-bottom: none;
+}
+
+.onboarding-table tr:hover {
+  background-color: #fdfaf4;
+}
+
+/* Action buttons */
+.onboarding-table button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: background-color 0.2s ease;
+}
+
+/* Edit button */
+.onboarding-table button:first-of-type {
+  background-color: #d4af37; /* Gold */
+  color: white;
+}
+
+.onboarding-table button:first-of-type:hover {
+  background-color: #b9962f;
+}
+
+/* Delete button */
+.onboarding-table button:last-of-type {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.onboarding-table button:last-of-type:hover {
+  background-color: #c0392b;
+}
+
+/* Save button in edit mode */
+.onboarding-table .save-btn {
+  background-color: #27ae60 !important;
+}
+
+.onboarding-table .save-btn:hover {
+  background-color: #1f8f4d !important;
+}
+
+/* Cancel button in edit mode */
+.onboarding-table .cancel-btn {
+  background-color: #95a5a6 !important;
+}
+
+.onboarding-table .cancel-btn:hover {
+  background-color: #7f8c8d !important;
+}
+
+/* Inline input in edit mode */
+.onboarding-table input,
+.onboarding-table select {
+  padding: 6px 10px;
   border: 1px solid #ddd;
+  border-radius: 4px;
 }
