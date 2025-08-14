@@ -6,9 +6,6 @@ const Header = ({ onLogout, toggleSidebar }) => {
   return (
     <header className="dashboard-header">
       <div className="header-left">
-        <button className="mobile-toggle" onClick={toggleSidebar}>
-          <FaBars />
-        </button>
         <h2>Empyrean HRMS</h2>
       </div>
 
