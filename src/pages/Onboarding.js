@@ -1,107 +1,189 @@
-// src/pages/Onboarding.js
 import React, { useState, useEffect } from 'react';
-import supabase from '../supabaseClient';
+import { supabase } from '../supabaseClient';
+import './Onboarding.css';
 
-export default function Onboarding() {
-  const [onboardingList, setOnboardingList] = useState([]);
+function Onboarding() {
+  const [onboardees, setOnboardees] = useState([]);
+  const [formData, setFormData] = useState({
+    name: '',
+    role: '',
+    status: 'Pending',
+  });
+  const [editingId, setEditingId] = useState(null);
+  const [editData, setEditData] = useState({ name: '', role: '', status: '' });
 
   useEffect(() => {
-    fetchOnboardingData();
+    fetchOnboardees();
   }, []);
 
-  const fetchOnboardingData = async () => {
-    const { data, error } = await supabase.from('onboarding').select('*');
+  // Fetch data from Supabase
+  const fetchOnboardees = async () => {
+    const { data, error } = await supabase
+      .from('onboarding')
+      .select('*')
+      .order('id', { ascending: true });
     if (error) {
-      console.error('Error fetching onboarding data:', error);
+      console.error('Error fetching onboardees:', error);
     } else {
-      setOnboardingList(data);
+      setOnboardees(data);
     }
   };
 
-  const handleEdit = (id) => {
-    console.log('Edit record with ID:', id);
-    // Add your edit logic here
+  // Add new onboardee
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { error } = await supabase.from('onboarding').insert([formData]);
+    if (error) {
+      console.error('Error adding onboardee:', error);
+    } else {
+      setFormData({ name: '', role: '', status: 'Pending' });
+      fetchOnboardees();
+    }
   };
 
+  // Delete onboardee
   const handleDelete = async (id) => {
     const { error } = await supabase.from('onboarding').delete().eq('id', id);
     if (error) {
-      console.error('Error deleting record:', error);
+      console.error('Error deleting onboardee:', error);
     } else {
-      fetchOnboardingData();
+      fetchOnboardees();
     }
   };
 
+  // Start editing
+  const handleEdit = (person) => {
+    setEditingId(person.id);
+    setEditData({ name: person.name, role: person.role, status: person.status });
+  };
+
+  // Save edited data
+  const handleSave = async (id) => {
+    const { error } = await supabase
+      .from('onboarding')
+      .update(editData)
+      .eq('id', id);
+    if (error) {
+      console.error('Error updating onboardee:', error);
+    } else {
+      setEditingId(null);
+      fetchOnboardees();
+    }
+  };
+
+  // Cancel editing
+  const handleCancel = () => {
+    setEditingId(null);
+  };
+
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="onboarding-container">
       <h2>Onboarding List</h2>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+
+      {/* Add Form */}
+      <form className="onboarding-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required
+        />
+        <input
+          type="text"
+          name="role"
+          placeholder="Role"
+          value={formData.role}
+          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+          required
+        />
+        <select
+          name="status"
+          value={formData.status}
+          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+        >
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <button type="submit">Add</button>
+      </form>
+
+      {/* Data Table */}
+      <table className="onboarding-table">
         <thead>
-          <tr style={{ backgroundColor: '#fff' }}>
-            <th style={thStyle}>Name</th>
-            <th style={thStyle}>Position</th>
-            <th style={thStyle}>Start Date</th>
-            <th style={thStyle}>Actions</th>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {onboardingList.length > 0 ? (
-            onboardingList.map((item) => (
-              <tr key={item.id} style={{ borderBottom: '1px solid #ddd' }}>
-                <td style={tdStyle}>{item.name}</td>
-                <td style={tdStyle}>{item.position}</td>
-                <td style={tdStyle}>{item.start_date}</td>
-                <td style={tdStyle}>
-                  <button
-                    onClick={() => handleEdit(item.id)}
-                    style={{
-                      marginRight: '8px',
-                      backgroundColor: '#3C0E0E',
-                      border: 'none',
-                      padding: '5px 10px',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      color: '#ffffffff',
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    style={{
-                      backgroundColor: '#dc3545',
-                      border: 'none',
-                      padding: '5px 10px',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      color: '#fff',
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" style={{ textAlign: 'center', padding: '10px' }}>
-                No onboarding records found.
-              </td>
+          {onboardees.map((person) => (
+            <tr key={person.id}>
+              <td>{person.id}</td>
+
+              {editingId === person.id ? (
+                <>
+                  {/* Editable fields */}
+                  <td>
+                    <input
+                      type="text"
+                      value={editData.name}
+                      onChange={(e) =>
+                        setEditData({ ...editData, name: e.target.value })
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={editData.role}
+                      onChange={(e) =>
+                        setEditData({ ...editData, role: e.target.value })
+                      }
+                    />
+                  </td>
+                  <td>
+                    <select
+                      value={editData.status}
+                      onChange={(e) =>
+                        setEditData({ ...editData, status: e.target.value })
+                      }
+                    >
+                      <option value="Pending">Pending</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button onClick={() => handleSave(person.id)}>Save</button>
+                    <button onClick={handleCancel}>Cancel</button>
+                  </td>
+                </>
+              ) : (
+                <>
+                  {/* Normal view */}
+                  <td>{person.name}</td>
+                  <td>{person.role}</td>
+                  <td>{person.status}</td>
+                  <td>
+                    <button onClick={() => handleEdit(person)}>Edit</button>
+                    <button onClick={() => handleDelete(person.id)}>
+                      Delete
+                    </button>
+                  </td>
+                </>
+              )}
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
     </div>
   );
 }
 
-const thStyle = {
-  padding: '10px',
-  textAlign: 'left',
-  borderBottom: '2px solid #ccc',
-};
-
-const tdStyle = {
-  padding: '10px',
-  textAlign: 'left',
-};
+export default Onboarding;
