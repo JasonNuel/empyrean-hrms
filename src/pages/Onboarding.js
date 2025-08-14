@@ -56,12 +56,12 @@ export default function Onboarding() {
                     onClick={() => handleEdit(item.id)}
                     style={{
                       marginRight: '8px',
-                      backgroundColor: '#ffc107',
+                      backgroundColor: '#3C0E0E',
                       border: 'none',
                       padding: '5px 10px',
                       borderRadius: '4px',
                       cursor: 'pointer',
-                      color: '#fff',
+                      color: '#ffffffff',
                     }}
                   >
                     Edit
