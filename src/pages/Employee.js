@@ -1,7 +1,7 @@
 // src/pages/Employee.js
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
-import './Employees.css';
+import './Employee.css';
 
 function Employee() {
   const [employees, setEmployees] = useState([]);
