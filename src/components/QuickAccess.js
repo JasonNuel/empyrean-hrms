@@ -7,6 +7,8 @@ import Payroll from '../pages/Payroll';
 import Performance from '../pages/Performance';
 
 const QuickAccess = () => {
+  const navigate = useNavigate();
+
   const items = [
     { icon: <FaUsers />, label: 'Employees', path: '/employee' },
     { icon: <FaCalendarCheck />, label: 'Attendance', path:'/attendance' },
@@ -14,10 +16,15 @@ const QuickAccess = () => {
     { icon: <FaChartLine />, label: 'Performance', path: '/performance' },
   ];
 
-  return (
+ return (
     <div className="quick-access">
       {items.map((item, index) => (
-        <div className="quick-card" key={index}>
+        <div
+          className="quick-card"
+          key={index}
+          onClick={() => navigate(item.path)}
+          style={{ cursor: 'pointer' }}
+        >
           <div className="icon">{item.icon}</div>
           <div className="label">{item.label}</div>
         </div>
