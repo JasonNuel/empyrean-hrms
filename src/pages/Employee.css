@@ -1,63 +1,59 @@
-/* src/Employees.css */
-.employees-container {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  font-family: Arial, sans-serif;
-}
-
-table {
+/* Employee Table Styles */
+.employee-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  font-family: Arial, sans-serif;
   font-size: 14px;
 }
 
-th {
-  background-color: #f5f5f5;
-  font-weight: bold;
-  border-bottom: 2px solid #ddd;
-}
-
-th, td {
-  padding: 12px;
+.employee-table th,
+.employee-table td {
+  padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e5e5e5;
 }
 
-tr:hover {
-  background-color: #fafafa;
+.employee-table th {
+  background-color: #f7f7f7;
+  font-weight: 600;
+  color: #333;
 }
 
-.action-buttons {
+.employee-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.employee-actions {
   display: flex;
   gap: 8px;
 }
 
-button {
+.edit-btn,
+.delete-btn {
   padding: 6px 12px;
-  font-size: 13px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
   transition: background 0.2s ease;
 }
 
-button.edit-btn {
-  background-color: #4cafef;
-  color: white;
+.edit-btn {
+  background-color: #fdd835; /* Gold-like yellow */
+  color: #333;
 }
 
-button.edit-btn:hover {
-  background-color: #3b8fd1;
+.edit-btn:hover {
+  background-color: #fbc02d;
 }
 
-button.delete-btn {
-  background-color: #f44336;
-  color: white;
+.delete-btn {
+  background-color: #e53935; /* Red */
+  color: #fff;
 }
 
-button.delete-btn:hover {
-  background-color: #d32f2f;
+.delete-btn:hover {
+  background-color: #c62828;
 }
