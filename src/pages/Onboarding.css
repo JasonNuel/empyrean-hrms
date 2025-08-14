@@ -33,7 +33,7 @@
 
 .onboarding-form button {
   padding: 8px 16px;
-  background-color: #d4af37; /* Gold */
+  background-color: rgb(60, 14, 14); 
   color: white;
   border: none;
   border-radius: 6px;
@@ -43,7 +43,7 @@
 }
 
 .onboarding-form button:hover {
-  background-color: #b9962f;
+  background-color: #1f1616;
 }
 
 /* Table container */
@@ -94,22 +94,22 @@
 
 /* Edit button */
 .onboarding-table button:first-of-type {
-  background-color: #d4af37; /* Gold */
+  background-color: rgb(60, 14, 14); 
   color: white;
 }
 
 .onboarding-table button:first-of-type:hover {
-  background-color: #b9962f;
+  background-color: #1f1616;
 }
 
 /* Delete button */
 .onboarding-table button:last-of-type {
-  background-color: #e74c3c;
+  background-color: #0e0d0d;
   color: white;
 }
 
 .onboarding-table button:last-of-type:hover {
-  background-color: #c0392b;
+  background-color: #171616;
 }
 
 /* Save button in edit mode */
