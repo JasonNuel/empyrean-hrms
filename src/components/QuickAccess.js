@@ -1,10 +1,6 @@
 import React from 'react';
 import './QuickAccess.css';
 import { FaUsers, FaCalendarCheck, FaMoneyCheckAlt, FaChartLine } from 'react-icons/fa';
-import Employee from '../pages/Employee';
-import Attendance from '../pages/Attendance';
-import Payroll from '../pages/Payroll';
-import Performance from '../pages/Performance';
 
 const QuickAccess = () => {
   const navigate = useNavigate();
