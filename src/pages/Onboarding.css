@@ -109,7 +109,7 @@
 }
 
 .onboarding-table button:last-of-type:hover {
-  background-color: #171616;
+  background-color: rgb(60, 14, 14);
 }
 
 /* Save button in edit mode */
