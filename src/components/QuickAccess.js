@@ -4,10 +4,10 @@ import { FaUsers, FaCalendarCheck, FaMoneyCheckAlt, FaChartLine } from 'react-ic
 
 const QuickAccess = () => {
   const items = [
-    { icon: <FaUsers />, label: 'Employees' },
-    { icon: <FaCalendarCheck />, label: 'Attendance' },
-    { icon: <FaMoneyCheckAlt />, label: 'Payroll' },
-    { icon: <FaChartLine />, label: 'Performance' },
+    { icon: <FaUsers />, label: 'Employees', path: '/employee' },
+    { icon: <FaCalendarCheck />, label: 'Attendance', path:'/attendance' },
+    { icon: <FaMoneyCheckAlt />, label: 'Payroll', path: '/payroll' },
+    { icon: <FaChartLine />, label: 'Performance', path: '/performance' },
   ];
 
   return (
