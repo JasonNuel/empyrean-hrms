@@ -9,6 +9,8 @@ import UpcomingTasks from '../components/UpcomingTasks';
 import './Dashboard.css';
 import ActivityTimeline from '../components/ActivityTimeline';
 import QuickAccess from '../components/QuickAccess';
+import Employee from './Employee';
+import Payroll from './Payroll';
 
 const Dashboard = () => {
   return (
@@ -34,8 +36,12 @@ const Dashboard = () => {
 <div className="performance-chart-row">
   <PerformanceChart />
 </div>
-
+<Attendance />
+<Employee />
+<Payroll />
+<Performance />
 <QuickAccess />
+
 
     </div>
     
