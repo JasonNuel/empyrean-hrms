@@ -1,23 +1,49 @@
+/* App layout */
 .app-container {
   display: flex;
+  flex-direction: row;
+  min-height: 100vh;
 }
 
+/* Main content */
 .main-content {
-  margin-left: 250px;
+  margin-left: 250px; /* default sidebar width */
   padding: 25px;
   width: calc(100% - 250px);
   transition: all 0.3s ease;
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .main-content.collapsed {
-  margin-left: 80px;
+  margin-left: 80px; /* collapsed sidebar width */
   width: calc(100% - 80px);
 }
-
 
 .main-content.public-page {
   margin-left: 0;
   padding: 0;
   width: 100%;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Tablets and small screens */
+@media screen and (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px;
+  }
+
+  .main-content.collapsed {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* Mobile screens */
+@media screen and (max-width: 480px) {
+  .main-content {
+    padding: 10px;
+  }
 }

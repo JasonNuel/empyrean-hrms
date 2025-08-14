@@ -13,7 +13,7 @@ import {
   FaBars,
 } from 'react-icons/fa';
 
-const Sidebar = ({ isCollapsed, toggleSidebar }) => {
+const Sidebar = ({ isCollapsed, toggleSidebar, mobileActive, toggleMobileSidebar }) => {
   const menuItems = [
     { label: 'Dashboard', icon: <FaTachometerAlt />, path: '/dashboard' },
     { label: 'Onboarding', icon: <FaUserCheck />, path: '/onboarding' },
@@ -25,25 +25,30 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
   ];
 
   return (
-    <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
-      <div className="sidebar-header">
-        <button className="toggle-button" onClick={toggleSidebar}>
-          <FaBars />
-        </button>
-        {!isCollapsed && <h2 className="logo-text">EmpyreanHRMS</h2>}
+    <>
+      <div className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${mobileActive ? 'active' : ''}`}>
+        <div className="sidebar-header">
+          <button className="toggle-button" onClick={toggleSidebar}>
+            <FaBars />
+          </button>
+          {!isCollapsed && <h2 className="logo-text">EmpyreanHRMS</h2>}
+        </div>
+
+        <ul className="sidebar-menu">
+          {menuItems.map((item, idx) => (
+            <li key={idx} className="sidebar-item">
+              <Link to={item.path} className="sidebar-link" onClick={mobileActive ? toggleMobileSidebar : undefined}>
+                <span className="icon">{item.icon}</span>
+                {!isCollapsed && <span className="label">{item.label}</span>}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <ul className="sidebar-menu">
-        {menuItems.map((item, idx) => (
-          <li key={idx} className="sidebar-item">
-            <Link to={item.path} className="sidebar-link">
-              <span className="icon">{item.icon}</span>
-              {!isCollapsed && <span className="label">{item.label}</span>}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+      {/* Overlay for mobile when sidebar is active */}
+      {mobileActive && <div className="overlay" onClick={toggleMobileSidebar}></div>}
+    </>
   );
 };
 
