@@ -1,3 +1,4 @@
+// src/pages/Onboarding.js
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import './Onboarding.css';
@@ -16,26 +17,22 @@ function Onboarding() {
     fetchOnboardees();
   }, []);
 
-  // Fetch data from Supabase
+  // Fetch onboarding data
   const fetchOnboardees = async () => {
     const { data, error } = await supabase
       .from('onboarding')
       .select('*')
       .order('id', { ascending: true });
-    if (error) {
-      console.error('Error fetching onboardees:', error);
-    } else {
-      setOnboardees(data);
-    }
+    if (error) console.error('Error fetching onboardees:', error);
+    else setOnboardees(data);
   };
 
   // Add new onboardee
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { error } = await supabase.from('onboarding').insert([formData]);
-    if (error) {
-      console.error('Error adding onboardee:', error);
-    } else {
+    if (error) console.error('Error adding onboardee:', error);
+    else {
       setFormData({ name: '', role: '', status: 'Pending' });
       fetchOnboardees();
     }
@@ -44,11 +41,8 @@ function Onboarding() {
   // Delete onboardee
   const handleDelete = async (id) => {
     const { error } = await supabase.from('onboarding').delete().eq('id', id);
-    if (error) {
-      console.error('Error deleting onboardee:', error);
-    } else {
-      fetchOnboardees();
-    }
+    if (error) console.error('Error deleting onboardee:', error);
+    else fetchOnboardees();
   };
 
   // Start editing
@@ -59,22 +53,37 @@ function Onboarding() {
 
   // Save edited data
   const handleSave = async (id) => {
-    const { error } = await supabase
+    const { error: updateError } = await supabase
       .from('onboarding')
       .update(editData)
       .eq('id', id);
-    if (error) {
-      console.error('Error updating onboardee:', error);
-    } else {
-      setEditingId(null);
-      fetchOnboardees();
+    if (updateError) {
+      console.error('Error updating onboardee:', updateError);
+      return;
     }
+
+    // If status is Completed, add to employees table
+    if (editData.status === 'Completed') {
+      const [first_name, ...lastParts] = editData.name.split(' ');
+      const last_name = lastParts.join(' ') || '';
+      const { error: employeeError } = await supabase.from('employees').insert([
+        {
+          first_name,
+          last_name,
+          position: editData.role,
+          department: 'General', // default department
+          salary: 0,             // default salary
+        },
+      ]);
+      if (employeeError) console.error('Error adding to employees:', employeeError);
+    }
+
+    setEditingId(null);
+    fetchOnboardees();
   };
 
   // Cancel editing
-  const handleCancel = () => {
-    setEditingId(null);
-  };
+  const handleCancel = () => setEditingId(null);
 
   return (
     <div className="onboarding-container">
@@ -128,7 +137,6 @@ function Onboarding() {
 
               {editingId === person.id ? (
                 <>
-                  {/* Editable fields */}
                   <td>
                     <input
                       type="text"
@@ -166,15 +174,12 @@ function Onboarding() {
                 </>
               ) : (
                 <>
-                  {/* Normal view */}
                   <td>{person.name}</td>
                   <td>{person.role}</td>
                   <td>{person.status}</td>
                   <td>
                     <button onClick={() => handleEdit(person)}>Edit</button>
-                    <button onClick={() => handleDelete(person.id)}>
-                      Delete
-                    </button>
+                    <button onClick={() => handleDelete(person.id)}>Delete</button>
                   </td>
                 </>
               )}
