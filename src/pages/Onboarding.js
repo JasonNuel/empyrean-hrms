@@ -37,7 +37,7 @@ export default function Onboarding() {
       <h2>Onboarding List</h2>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
-          <tr style={{ backgroundColor: '#f5f5f5' }}>
+          <tr style={{ backgroundColor: '#fff' }}>
             <th style={thStyle}>Name</th>
             <th style={thStyle}>Position</th>
             <th style={thStyle}>Start Date</th>
