@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react';
+// src/pages/Employee.js
+import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
-import './Employee.css';
+import './Employees.css';
 
-function Employees() {
+function Employee() {
   const [employees, setEmployees] = useState([]);
-  const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    phone: '',
-    position: '',
-    department: '',
-    salary: ''
-  });
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState({
     first_name: '',
@@ -21,7 +13,7 @@ function Employees() {
     phone: '',
     position: '',
     department: '',
-    salary: ''
+    salary: 0,
   });
 
   useEffect(() => {
@@ -34,54 +26,21 @@ function Employees() {
       .from('employees')
       .select('*')
       .order('created_at', { ascending: true });
-    if (error) {
-      console.error('Error fetching employees:', error);
-    } else {
-      setEmployees(data);
-    }
-  };
-
-  // Add new employee
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { error } = await supabase.from('employees').insert([formData]);
-    if (error) {
-      console.error('Error adding employee:', error);
-    } else {
-      setFormData({
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone: '',
-        position: '',
-        department: '',
-        salary: ''
-      });
-      fetchEmployees();
-    }
-  };
-
-  // Delete employee
-  const handleDelete = async (id) => {
-    const { error } = await supabase.from('employees').delete().eq('id', id);
-    if (error) {
-      console.error('Error deleting employee:', error);
-    } else {
-      fetchEmployees();
-    }
+    if (error) console.error('Error fetching employees:', error);
+    else setEmployees(data);
   };
 
   // Start editing
-  const handleEdit = (emp) => {
-    setEditingId(emp.id);
+  const handleEdit = (employee) => {
+    setEditingId(employee.id);
     setEditData({
-      first_name: emp.first_name,
-      last_name: emp.last_name,
-      email: emp.email,
-      phone: emp.phone,
-      position: emp.position,
-      department: emp.department,
-      salary: emp.salary
+      first_name: employee.first_name,
+      last_name: employee.last_name,
+      email: employee.email,
+      phone: employee.phone,
+      position: employee.position,
+      department: employee.department,
+      salary: employee.salary,
     });
   };
 
@@ -91,76 +50,26 @@ function Employees() {
       .from('employees')
       .update(editData)
       .eq('id', id);
-    if (error) {
-      console.error('Error updating employee:', error);
-    } else {
+    if (error) console.error('Error updating employee:', error);
+    else {
       setEditingId(null);
       fetchEmployees();
     }
   };
 
-  // Cancel editing
-  const handleCancel = () => {
-    setEditingId(null);
+  // Delete employee
+  const handleDelete = async (id) => {
+    const { error } = await supabase.from('employees').delete().eq('id', id);
+    if (error) console.error('Error deleting employee:', error);
+    else fetchEmployees();
   };
+
+  // Cancel editing
+  const handleCancel = () => setEditingId(null);
 
   return (
     <div className="employees-container">
-      <h2>Employees</h2>
-
-      {/* Add Employee Form */}
-      <form className="employee-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="First Name"
-          value={formData.first_name}
-          onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          value={formData.last_name}
-          onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Phone"
-          value={formData.phone}
-          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Position"
-          value={formData.position}
-          onChange={(e) => setFormData({ ...formData, position: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Department"
-          value={formData.department}
-          onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Salary"
-          value={formData.salary}
-          onChange={(e) => setFormData({ ...formData, salary: e.target.value })}
-        />
-        <button type="submit">Add Employee</button>
-      </form>
-
-      {/* Employees Table */}
+      <h2>Employee List</h2>
       <table>
         <thead>
           <tr>
@@ -209,7 +118,7 @@ function Employees() {
                   <td>
                     <input
                       type="text"
-                      value={editData.phone}
+                      value={editData.phone || ''}
                       onChange={(e) =>
                         setEditData({ ...editData, phone: e.target.value })
                       }
@@ -238,7 +147,7 @@ function Employees() {
                       type="number"
                       value={editData.salary}
                       onChange={(e) =>
-                        setEditData({ ...editData, salary: e.target.value })
+                        setEditData({ ...editData, salary: parseFloat(e.target.value) })
                       }
                     />
                   </td>
@@ -270,4 +179,4 @@ function Employees() {
   );
 }
 
-export default Employees;
+export default Employee;
