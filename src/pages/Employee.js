@@ -1,54 +1,124 @@
 // src/pages/Employee.js
-import React, { useEffect, useState } from 'react';
-import { supabase } from '../supabaseClient';
-import './Employee.css';
+import React, { useState, useEffect } from "react";
+import supabase from "../supabaseClient";
 
 function Employee() {
   const [employees, setEmployees] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [editData, setEditData] = useState({ name: "", role: "", email: "" });
 
+  // Fetch employees from Supabase
   useEffect(() => {
     fetchEmployees();
   }, []);
 
-  const fetchEmployees = async () => {
-    const { data, error } = await supabase.from('employees').select('*');
-    if (error) {
-      console.error('Error fetching employees:', error);
-    } else {
-      setEmployees(data);
-    }
-  };
+  async function fetchEmployees() {
+    const { data, error } = await supabase.from("employees").select("*");
+    if (error) console.error("Error fetching employees:", error);
+    else setEmployees(data);
+  }
 
-    
+  // Handle delete
+  async function handleDelete(id) {
+    const { error } = await supabase.from("employees").delete().eq("id", id);
+    if (error) console.error("Error deleting employee:", error);
+    else fetchEmployees();
+  }
+
+  // Handle edit click
+  function handleEditClick(employee) {
+    setEditingId(employee.id);
+    setEditData({
+      name: employee.name,
+      role: employee.role,
+      email: employee.email
+    });
+  }
+
+  // Handle save after editing
+  async function handleSave() {
+    const { error } = await supabase
+      .from("employees")
+      .update(editData)
+      .eq("id", editingId);
+
+    if (error) console.error("Error updating employee:", error);
+    else {
+      setEditingId(null);
+      fetchEmployees();
+    }
+  }
+
   return (
-    <div className="employees-container">
+    <div style={{ padding: "20px" }}>
       <h2>Employee List</h2>
-      <table>
+      <table
+        border="1"
+        cellPadding="10"
+        style={{ borderCollapse: "collapse", width: "100%" }}
+      >
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Role</th>
             <th>Email</th>
-            <th>Salary Paid</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {employees.length === 0 ? (
-            <tr>
-              <td colSpan="5">Loading employees...</td>
+          {employees.map((employee) => (
+            <tr key={employee.id}>
+              {editingId === employee.id ? (
+                <>
+                  <td>
+                    <input
+                      type="text"
+                      value={editData.name}
+                      onChange={(e) =>
+                        setEditData({ ...editData, name: e.target.value })
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={editData.role}
+                      onChange={(e) =>
+                        setEditData({ ...editData, role: e.target.value })
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="email"
+                      value={editData.email}
+                      onChange={(e) =>
+                        setEditData({ ...editData, email: e.target.value })
+                      }
+                    />
+                  </td>
+                  <td>
+                    <button onClick={handleSave}>Save</button>
+                    <button onClick={() => setEditingId(null)}>Cancel</button>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td>{employee.name}</td>
+                  <td>{employee.role}</td>
+                  <td>{employee.email}</td>
+                  <td>
+                    <button onClick={() => handleEditClick(employee)}>
+                      Edit
+                    </button>
+                    <button onClick={() => handleDelete(employee.id)}>
+                      Delete
+                    </button>
+                  </td>
+                </>
+              )}
             </tr>
-          ) : (
-            employees.map((emp) => (
-              <tr key={emp.id}>
-                <td>{emp.id}</td>
-                <td>{emp.name}</td>
-                <td>{emp.role}</td>
-                <td>{emp.email}</td>
-                <td>{emp.salary_paid ? '✅ Yes' : '❌ No'}</td>
-              </tr>
-            ))
-          )}
+          ))}
         </tbody>
       </table>
     </div>
