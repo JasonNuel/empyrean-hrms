@@ -1,12 +1,22 @@
 // src/pages/Employee.js
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
-import './Employee.css';
+import './Employees.css';
 
 function Employee() {
   const [employees, setEmployees] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    position: '',
+    department: '',
+    salary: 0,
+  });
+
+  const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
     email: '',
@@ -28,6 +38,25 @@ function Employee() {
       .order('created_at', { ascending: true });
     if (error) console.error('Error fetching employees:', error);
     else setEmployees(data);
+  };
+
+  // Add new employee
+  const handleAdd = async (e) => {
+    e.preventDefault();
+    const { error } = await supabase.from('employees').insert([formData]);
+    if (error) console.error('Error adding employee:', error);
+    else {
+      setFormData({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        position: '',
+        department: '',
+        salary: 0,
+      });
+      fetchEmployees();
+    }
   };
 
   // Start editing
@@ -64,12 +93,65 @@ function Employee() {
     else fetchEmployees();
   };
 
-  // Cancel editing
   const handleCancel = () => setEditingId(null);
 
   return (
     <div className="employees-container">
       <h2>Employee List</h2>
+
+      {/* Add Employee Form */}
+      <form className="employee-form" onSubmit={handleAdd}>
+        <input
+          type="text"
+          placeholder="First Name"
+          value={formData.first_name}
+          onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Last Name"
+          value={formData.last_name}
+          onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Phone"
+          value={formData.phone}
+          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Position"
+          value={formData.position}
+          onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Department"
+          value={formData.department}
+          onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+          required
+        />
+        <input
+          type="number"
+          placeholder="Salary"
+          value={formData.salary}
+          onChange={(e) => setFormData({ ...formData, salary: parseFloat(e.target.value) })}
+        />
+        <button type="submit">Add Employee</button>
+      </form>
+
+      {/* Employee Table */}
       <table>
         <thead>
           <tr>
